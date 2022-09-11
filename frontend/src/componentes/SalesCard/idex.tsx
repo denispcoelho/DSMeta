@@ -1,3 +1,4 @@
+import { BASE_URL } from "../../utils/request";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
@@ -5,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import NotificationButton from "../NotificationButton";
 import "./style.css";
+import { Sale } from "../models/sale";
 
 function SalesCard() {
   
@@ -15,10 +17,12 @@ function SalesCard() {
     const [minDate, setMinDate]= useState(min);
     const [maxDate, setMaxDate]= useState(max);
 
+    const [sales, setSales]= useState<Sale[]>([]);
+
     useEffect(() => {
-        axios.get("http://localhost:8080/sales")
+        axios.get(`${BASE_URL}/sales`)
             .then(response =>{
-                console.log(response.data);
+                setSales(response.data.content);
             })
     }, []);
   
@@ -56,58 +60,27 @@ function SalesCard() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="showdata992">#001</td>
-            <td className="showdata">08/07/22</td>
-            <td>Anakin</td>
-            <td className="showdata992">10</td>
-            <td className="showdata992">11</td>
-            <td>R$ 500,00</td>
-            <td>
-              <div className="redtbm-container">
-                <NotificationButton />
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td className="showdata992">#002</td>
-            <td className="showdata">08/07/22</td>
-            <td>Luke</td>
-            <td className="showdata992">12</td>
-            <td className="showdata992">14</td>
-            <td>R$ 800,00</td>
-            <td>
-              <div className="redtbm-container">
-                <NotificationButton />
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td className="showdata992">#003</td>
-            <td className="showdata">08/07/22</td>
-            <td>Leia</td>
-            <td className="showdata992">15</td>
-            <td className="showdata992">12</td>
-            <td>R$ 900,00</td>
-            <td>
-              <div className="redtbm-container">
-                <NotificationButton />
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td className="showdata992">#004</td>
-            <td className="showdata">08/07/22</td>
-            <td>Han</td>
-            <td className="showdata992">09</td>
-            <td className="showdata992">10</td>
-            <td>R$ 300,00</td>
-            <td>
-              <div className="redtbm-container">
-                <NotificationButton />
-              </div>
-            </td>
-          </tr>
+            {sales.map(sale => {
+                return (
+
+                <tr key={sale.id}>
+                    <td className="showdata992">{sale.id}</td>
+                    <td className="showdata">{new Date(sale.date).toLocaleDateString()}</td>
+                    <td>{sale.sellerName}</td>
+                    <td className="showdata992">{sale.visited}</td>
+                    <td className="showdata992">{sale.deals}</td>
+                    <td>R$ {sale.amount.toFixed(2)}</td>
+                    <td>
+                        <div className="redtbm-container">
+                            <NotificationButton />
+                        </div>
+                    </td>
+                </tr>
+                )
+            
+            })}
+
+
         </tbody>
       </table>
     </div>
