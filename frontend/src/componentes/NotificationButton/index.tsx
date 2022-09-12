@@ -1,5 +1,5 @@
-import axios, { Axios } from "axios";
-import { toast } from "react-toastify";
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import icon from "../../assets/img/Notificationicon.svg"
 import { BASE_URL } from "../../utils/request";
 import '../NotificationButton/styles.css'
@@ -24,4 +24,4 @@ function NotificationButton({saleId}: Props) {
     )
 }
         
-  export default NotificationButton
+  export default NotificationButton;
