@@ -1,4 +1,4 @@
 # DSMeta
 
-Projeto de Site estático com CSL
+Projeto de DashBoard de vendas
 Elaborado com as instruções do Prof. Nélio Alves
